@@ -1,6 +1,8 @@
 import { pino, Logger as PinoLogger, LoggerOptions as PinoLoggerOptions } from 'pino';
 import { ILogger, TLoggerOptions } from '@/lib/logger/types/logger.interface';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class Logger implements ILogger {
   private context: string;
   private readonly pinoLogger: PinoLogger;

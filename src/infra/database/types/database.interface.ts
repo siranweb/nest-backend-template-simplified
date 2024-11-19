@@ -5,7 +5,7 @@ import { TMigrationTable } from '@/infra/database/tables/migration.table';
 
 type TTables = {
   user: TUserTable;
-  invalidRefreshToken: TInvalidRefreshTokenTable;
+  invalid_refresh_token: TInvalidRefreshTokenTable;
   __migration: TMigrationTable;
 };
 export interface IDatabase extends Kysely<TTables> {}

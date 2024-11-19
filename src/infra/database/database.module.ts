@@ -1,6 +1,10 @@
 import { Inject, Module, OnApplicationShutdown } from '@nestjs/common';
 import { ConfigModule } from '@/infra/config/config.module';
-import { DATABASE_DI_CONSTANTS, providers, publicProviders } from '@/infra/database/database.providers';
+import {
+  DATABASE_DI_CONSTANTS,
+  providers,
+  publicProviders,
+} from '@/infra/database/database.providers';
 import { IDatabase } from '@/infra/database/types/database.interface';
 
 @Module({
@@ -11,7 +15,7 @@ import { IDatabase } from '@/infra/database/types/database.interface';
 export class DatabaseModule implements OnApplicationShutdown {
   constructor(
     @Inject(DATABASE_DI_CONSTANTS.DATABASE)
-    private readonly db: IDatabase
+    private readonly db: IDatabase,
   ) {}
 
   public async onApplicationShutdown(): Promise<void> {

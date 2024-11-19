@@ -6,7 +6,9 @@ import {
   VerifyParams,
   VerifyResult,
 } from '../types/jwt-service.interface';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class JwtService implements IJWTService {
   async createToken(params: CreateTokenParams): Promise<string> {
     const encodedSecret = new TextEncoder().encode(params.secret);

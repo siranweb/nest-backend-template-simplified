@@ -4,7 +4,8 @@ TODO:
 - [x] Init project
 - [x] Project structure
 - [ ] Docker
-- [ ] Core logic
+- [x] Core logic
+- [ ] Web API
 - [x] Database
 - [ ] Migrations
   - [ ] CLI
