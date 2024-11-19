@@ -1,7 +1,8 @@
 import { z } from 'zod';
-import { NodeEnv } from '@/common/types';
+import { NodeEnv } from 'src/shared/types';
 
-const expirationTimeRegex  = /^\d+\s*(sec|secs|second|seconds|s|minute|minutes|min|mins|m|hour|hours|hr|hrs|h|day|days|d|week|weeks|w|year|years|yr|yrs|y)$/i;
+const expirationTimeRegex =
+  /^\d+\s*(sec|secs|second|seconds|s|minute|minutes|min|mins|m|hour|hours|hr|hrs|h|day|days|d|week|weeks|w|year|years|yr|yrs|y)$/i;
 
 export const configurationSchema = z.object({
   nodeEnv: z.nativeEnum(NodeEnv),
@@ -15,7 +16,7 @@ export const configurationSchema = z.object({
     }),
     refreshToken: z.object({
       expirationTime: z.string().regex(expirationTimeRegex),
-    })
+    }),
   }),
   database: z.object({
     user: z.string().min(1),
@@ -23,7 +24,7 @@ export const configurationSchema = z.object({
     db: z.string().min(1),
     host: z.string().min(1),
     port: z.number().positive(),
-  })
+  }),
 });
 
-export type Configuration = z.infer<typeof configurationSchema>;
+export type TConfiguration = z.infer<typeof configurationSchema>;

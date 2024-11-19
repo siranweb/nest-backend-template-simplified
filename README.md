@@ -8,9 +8,10 @@ TODO:
 - [x] Database
 - [ ] Migrations
   - [ ] CLI
+- [ ] Swagger
 - [ ] Zod with OpenAPI
 - [ ] Error handler
   - [ ] Errors with OpenAPI responses
 - [ ] Linter
   - [ ] lint-staged
-  - [ ] Wait for typescript-eslint fix
+  - [x] Wait for typescript-eslint fix

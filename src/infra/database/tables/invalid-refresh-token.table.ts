@@ -1,5 +1,5 @@
-import { TableBase } from './base';
+import { TTableBase } from './base';
 
-export type InvalidRefreshTokenTable = TableBase & {
+export type TInvalidRefreshTokenTable = TTableBase & {
   token: string;
 };

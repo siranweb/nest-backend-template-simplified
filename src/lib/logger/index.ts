@@ -1,11 +1,11 @@
 import { pino, Logger as PinoLogger, LoggerOptions as PinoLoggerOptions } from 'pino';
-import { ILogger, LoggerOptions } from '@/lib/logger/types/logger.interface';
+import { ILogger, TLoggerOptions } from '@/lib/logger/types/logger.interface';
 
 export class Logger implements ILogger {
   private context: string;
   private readonly pinoLogger: PinoLogger;
 
-  constructor(private readonly options: LoggerOptions = {}) {
+  constructor(private readonly options: TLoggerOptions = {}) {
     const { context, nodeEnv, asyncStorage } = this.options;
     const level = nodeEnv === 'development' ? 'trace' : 'info';
     const pretty = nodeEnv === 'development';
@@ -32,7 +32,6 @@ export class Logger implements ILogger {
         };
       };
     }
-
 
     this.pinoLogger = pino(pinoConfig);
     this.context = context ?? '';
@@ -68,7 +67,7 @@ export class Logger implements ILogger {
   public fatal(error: Error, message?: string, data: Record<string, any> = {}): void {
     this.pinoLogger.fatal(
       { ...data, error: this.getPlainError(error) },
-      message ? this.prepareMessage(message) : ''
+      message ? this.prepareMessage(message) : '',
     );
   }
 

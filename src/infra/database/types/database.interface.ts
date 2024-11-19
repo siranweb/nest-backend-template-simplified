@@ -1,11 +1,11 @@
 import { Kysely } from 'kysely';
-import { UserTable } from '@/infra/database/tables/user.table';
-import { InvalidRefreshTokenTable } from '@/infra/database/tables/invalid-refresh-token.table';
-import { MigrationTable } from '@/infra/database/tables/migration.table';
+import { TUserTable } from '@/infra/database/tables/user.table';
+import { TInvalidRefreshTokenTable } from '@/infra/database/tables/invalid-refresh-token.table';
+import { TMigrationTable } from '@/infra/database/tables/migration.table';
 
-type Tables = {
-  user: UserTable;
-  invalidRefreshToken: InvalidRefreshTokenTable;
-  __migration: MigrationTable;
+type TTables = {
+  user: TUserTable;
+  invalidRefreshToken: TInvalidRefreshTokenTable;
+  __migration: TMigrationTable;
 };
-export type IDatabase = Kysely<Tables>;
+export interface IDatabase extends Kysely<TTables> {}

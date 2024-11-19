@@ -1,6 +1,6 @@
 import { Generated } from 'kysely';
 
-export type MigrationTable = {
+export type TMigrationTable = {
   name: string;
   migratedAt: Generated<Date>;
 };

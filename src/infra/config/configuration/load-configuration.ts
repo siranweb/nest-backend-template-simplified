@@ -1,8 +1,8 @@
 import process from 'process';
-import { NodeEnv } from '@/common/types';
-import { Configuration } from '@/infra/config/configuration/configuration.schema';
+import { NodeEnv } from 'src/shared/types';
+import { TConfiguration } from '@/infra/config/configuration/configuration.schema';
 
-export function loadConfiguration(): Configuration {
+export function loadConfiguration(): TConfiguration {
   return {
     nodeEnv: (process.env.NODE_ENV ?? NodeEnv.DEVELOPMENT) as NodeEnv,
     webServer: {
@@ -24,5 +24,5 @@ export function loadConfiguration(): Configuration {
       host: process.env.POSTGRES_HOST ?? '',
       port: Number(process.env.POSTGRES_PORT),
     },
-  }
-};
+  };
+}

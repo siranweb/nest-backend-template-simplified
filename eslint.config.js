@@ -1,3 +1,4 @@
+/* eslint-disable */
 /** @type {import('eslint').Linter.FlatConfig[]} */
 const js = require('@eslint/js');
 const tseslint = require('typescript-eslint');
@@ -8,11 +9,13 @@ module.exports = [
   ...tseslint.configs.recommended,
   eslintPluginPrettierRecommended,
   {
+    ignores: ['eslint.config.js'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unsafe-declaration-merging': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/no-this-alias': 'off',
+      '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

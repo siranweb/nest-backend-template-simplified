@@ -1,6 +1,6 @@
-import { TableBase } from './base';
+import { TTableBase } from './base';
 
-export type UserTable = TableBase & {
+export type TUserTable = TTableBase & {
   id: string;
   login: string;
   passwordHash: string;

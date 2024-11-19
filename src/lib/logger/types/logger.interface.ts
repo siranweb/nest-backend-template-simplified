@@ -10,7 +10,7 @@ export interface ILogger {
   fatal(error: Error, message: string, data?: Record<string, any>): void;
 }
 
-export type LoggerOptions = {
+export type TLoggerOptions = {
   context?: string;
   nodeEnv?: string;
   asyncStorage?: AsyncLocalStorage<{ requestId: string }>;

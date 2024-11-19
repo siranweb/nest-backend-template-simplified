@@ -12,7 +12,7 @@ import { SqlActions } from '@/infra/database/migrator/sql-actions';
 export const DATABASE_DI_CONSTANTS = {
   DATABASE: Symbol('DATABASE'),
   MIGRATOR: Symbol('MIGRATOR'),
-}
+};
 
 export const publicProviders: Provider[] = [
   {
@@ -38,7 +38,7 @@ export const publicProviders: Provider[] = [
       });
     },
     inject: [ConfigService],
-  },
+  } satisfies Provider<IDatabase>,
   {
     provide: DATABASE_DI_CONSTANTS.MIGRATOR,
     useFactory(db: IDatabase): IMigrator {
@@ -48,9 +48,7 @@ export const publicProviders: Provider[] = [
       });
     },
     inject: [DATABASE_DI_CONSTANTS.DATABASE],
-  }
+  } satisfies Provider<IMigrator>,
 ];
 
-export const providers: Provider[] = [
-  ...publicProviders,
-];
+export const providers: Provider[] = [...publicProviders];

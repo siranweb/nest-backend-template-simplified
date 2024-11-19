@@ -1,6 +1,6 @@
 import { Generated } from 'kysely';
 
-export interface TableBase {
+export type TTableBase = {
   createdAt: Generated<Date>;
   updatedAt: Generated<Date>;
-}
+};
