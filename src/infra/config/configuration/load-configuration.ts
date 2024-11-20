@@ -1,3 +1,4 @@
+import * as process from 'node:process';
 import { NodeEnv } from 'src/shared/types';
 import {
   configurationSchema,
