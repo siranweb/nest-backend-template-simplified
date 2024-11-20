@@ -2,8 +2,8 @@ import { ExceptionFilter, Provider } from '@nestjs/common';
 import { ErrorFilter } from '@/infra/common/filters/error.filter';
 import { Logger } from '@/lib/logger';
 import { ILogger } from '@/lib/logger/types/logger.interface';
-import { ConfigService } from '@nestjs/config';
 import { IConfigService } from '@/infra/config/types/config-service.interface';
+import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 
 export const COMMON_DI_CONSTANTS = {
   LOGGER: Symbol('LOGGER'),
@@ -21,7 +21,7 @@ export const publicProviders: Provider[] = [
       const nodeEnv = configService.get('nodeEnv', { infer: true });
       return new Logger({ nodeEnv });
     },
-    inject: [ConfigService],
+    inject: [CONFIG_DI_CONSTANTS.CONFIG_SERVICE],
   } satisfies Provider<ILogger>,
 ];
 

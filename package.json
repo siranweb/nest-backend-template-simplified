@@ -8,10 +8,13 @@
   "scripts": {
     "start": "dotenvx run -f env/run/app.env -- nest start",
     "start:dev": "dotenvx run -f env/run/app.env -- nest start --watch",
-    "start:prod": "dotenvx run -f env/run/app.env -- node dist/main",
+    "start:dist": "dotenvx run -f env/run/app.env -- node dist/main",
     "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint \"src/**/*.ts\" --fix"
+    "lint": "eslint \"src/**/*.ts\" --fix",
+    "compose:dev:up": "docker compose -f docker-compose-dev.yml up -d",
+    "compose:dev:down": "docker compose -f docker-compose-dev.yml down",
+    "compose:up": "docker compose up -d --build",
+    "compose:down": "docker compose down"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.24.0",

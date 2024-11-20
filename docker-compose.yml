@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    tty: true
+    build: app
+    depends_on:
+      - database
+    env_file:
+      - env/run/app.env
+    ports:
+      - "4000:4000"
+    networks:
+      - app-network
+
+  database:
+    tty: true
+    image: 'postgres:15.4'
+    env_file:
+      - env/run/database.env
+    networks:
+      - app-network
+    volumes:
+      - database:/var/lib/postgresql/data/
+
+volumes:
+  database:
+
+networks:
+  app-network:

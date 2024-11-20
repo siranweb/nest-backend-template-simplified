@@ -3,7 +3,7 @@
 TODO:
 - [x] Init project
 - [x] Project structure
-- [ ] Docker
+- [x] Docker
 - [x] Core logic
 - [ ] Web API
 - [x] Database
