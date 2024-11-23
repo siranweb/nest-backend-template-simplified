@@ -9,8 +9,8 @@ TODO:
 - [x] Database
 - [ ] Migrations
   - [ ] CLI
-- [ ] Swagger
-- [ ] Zod with OpenAPI
+- [x] Swagger
+- [x] Zod with OpenAPI
 - [ ] Error handler
   - [ ] Errors with OpenAPI responses
 - [x] Linter
