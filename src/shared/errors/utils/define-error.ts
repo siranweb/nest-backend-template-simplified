@@ -14,7 +14,7 @@ export function defineError<Shape extends ZodRawShape, Params extends z.infer<Zo
   });
 
   return class extends AppError<Params> {
-    static schema = apiSchema;
+    public static schema = apiSchema;
 
     constructor(params?: Params) {
       super(code, params ?? ({} as Params));

@@ -13,6 +13,5 @@ TODO:
 - [ ] Zod with OpenAPI
 - [ ] Error handler
   - [ ] Errors with OpenAPI responses
-- [ ] Linter
-  - [ ] lint-staged
+- [x] Linter
   - [x] Wait for typescript-eslint fix
