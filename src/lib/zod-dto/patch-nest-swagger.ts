@@ -8,6 +8,7 @@ import { SchemaObjectFactory } from '@nestjs/swagger/dist/services/schema-object
 import { isZodDto } from '@/lib/zod-dto/dto-helpers';
 import { createSchema } from 'zod-openapi';
 import { SchemaObject } from '@nestjs/swagger/dist/interfaces/open-api-spec.interface';
+import { isAppErrorDto } from '@/shared/errors/is-app-error.dto';
 
 export function patchNestJsSwagger() {
   // @ts-ignore
@@ -25,14 +26,21 @@ export function patchNestJsSwagger() {
       type = factory();
     }
 
-    if (!isZodDto(type)) {
-      return defaultExplore.call(this, type, schemas, schemaRefsStack);
+    if (isZodDto(type)) {
+      schemas[type.name] = createSchema(type.schema, {
+        openapi: '3.0.0',
+      }).schema as SchemaObject;
+      return type.name;
     }
 
-    schemas[type.name] = createSchema(type.schema, {
-      openapi: '3.0.0',
-    }).schema as SchemaObject;
-    return type.name;
+    if (isAppErrorDto(type)) {
+      schemas[type.name] = createSchema(type.schema, {
+        openapi: '3.0.0',
+      }).schema as SchemaObject;
+      return type.name;
+    }
+
+    return defaultExplore.call(this, type, schemas, schemaRefsStack);
   };
   // @ts-ignore
   SchemaObjectFactory.prototype.__zodDtoPatched = true;

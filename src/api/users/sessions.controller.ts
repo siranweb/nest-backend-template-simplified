@@ -16,9 +16,14 @@ import { ApiForbiddenResponse, ApiNoContentResponse, ApiOperation, ApiTags } fro
 import { ILoginCase } from '@/core/users/types/login-case.interface';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { IRefreshTokensCase } from '@/core/users/types/refresh-tokens-case.interface';
+import { UserLoginTakenError, UserNotFoundError } from '@/core/users/errors';
+import { ApiResponses } from '@/infra/common/decorators/api-responses.decorator';
+import { UnknownError, ValidationError } from '@/shared/errors/common-errors';
 
 @ApiTags('sessions')
 @Controller('/sessions')
+@ApiResponses(HttpStatus.BAD_REQUEST, [ValidationError])
+@ApiResponses(HttpStatus.INTERNAL_SERVER_ERROR, [UnknownError])
 export class SessionsController {
   constructor(
     @Inject(USERS_DI_CONSTANTS.LOGIN_CASE)
@@ -30,7 +35,7 @@ export class SessionsController {
   @Post('/auth')
   @ApiOperation({ summary: 'Authorize and get cookies' })
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiNoContentResponse()
+  @ApiResponses(HttpStatus.BAD_REQUEST, [UserLoginTakenError, UserNotFoundError])
   public async login(
     @Res({ passthrough: true })
     reply: FastifyReply,

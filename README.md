@@ -6,6 +6,7 @@ TODO:
 - [x] Docker
 - [x] Core logic
 - [ ] Web API
+- [ ] Fastify logger
 - [ ] Auth
   - [ ] Guard
   - [ ] Decorators
@@ -14,7 +15,7 @@ TODO:
   - [ ] CLI
 - [x] Swagger
 - [x] Zod with OpenAPI
-- [ ] Error handler
-  - [ ] Errors with OpenAPI responses
+- [x] Error handler
+  - [x] Errors with OpenAPI responses
 - [x] Linter
   - [x] Wait for typescript-eslint fix

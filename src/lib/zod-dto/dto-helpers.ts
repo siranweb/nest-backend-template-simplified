@@ -26,10 +26,6 @@ export function createZodDto<TOutput = any, TDef extends ZodTypeDef = ZodTypeDef
         openapi: '3.0.0',
       }).schema as SchemaObject;
       addSchemaProperties(schema);
-
-      console.log(schema);
-      //@ts-ignore
-      // schema.properties.login.required = false;
       return schema.properties;
     }
 

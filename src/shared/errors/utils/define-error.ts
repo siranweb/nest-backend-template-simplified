@@ -15,6 +15,11 @@ export function defineError<Shape extends ZodRawShape, Params extends z.infer<Zo
 
   return class extends AppError<Params> {
     public static schema = apiSchema;
+    public static isAppError = true;
+
+    public static create(input: unknown) {
+      return this.schema.parse(input);
+    }
 
     constructor(params?: Params) {
       super(code, params ?? ({} as Params));
