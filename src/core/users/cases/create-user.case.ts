@@ -5,7 +5,7 @@ import { IUsersRepository } from '@/core/users/types/users-repository.interface'
 import { User } from '@/core/users/entities/user.entity';
 import { Inject, Injectable } from '@nestjs/common';
 import { COMMON_DI_CONSTANTS } from '@/infra/common/common.providers';
-import { USERS_DI_CONSTANTS } from '@/core/users/users.providers';
+import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { UserLoginTakenError } from '@/core/users/errors';
 import { IUsersTokensService } from '@/core/users/types/users-tokens-service.interface';
 import { IUsersService } from '@/core/users/types/users-service.interface';

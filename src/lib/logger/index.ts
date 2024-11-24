@@ -1,8 +1,8 @@
-import { pino, Logger as PinoLogger, LoggerOptions as PinoLoggerOptions } from 'pino';
+import { Logger as PinoLogger, LoggerOptions as PinoLoggerOptions, pino } from 'pino';
 import { ILogger, TLoggerOptions } from '@/lib/logger/types/logger.interface';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Scope } from '@nestjs/common';
 
-@Injectable()
+@Injectable({ scope: Scope.TRANSIENT })
 export class Logger implements ILogger {
   private context: string;
   private readonly pinoLogger: PinoLogger;
@@ -59,16 +59,42 @@ export class Logger implements ILogger {
     this.pinoLogger.warn(data, this.prepareMessage(message));
   }
 
-  public error(error: Error, message?: string, data: Record<string, any> = {}): void {
+  public error(
+    errorOrMessage: Error | string,
+    messageOrData?: string | Record<string, any>,
+    data?: Record<string, any>,
+  ): void {
+    const error = errorOrMessage instanceof Error ? errorOrMessage : null;
+    const message = (errorOrMessage instanceof Error ? messageOrData : errorOrMessage) as string;
+    const logData = (typeof messageOrData === 'object' ? messageOrData : (data ?? {})) as Record<
+      string,
+      any
+    >;
+
+    const plainError = error ? this.getPlainError(error) : null;
+
     this.pinoLogger.error(
-      { ...data, error: this.getPlainError(error) },
+      { ...logData, error: plainError },
       message ? this.prepareMessage(message) : '',
     );
   }
 
-  public fatal(error: Error, message?: string, data: Record<string, any> = {}): void {
+  public fatal(
+    errorOrMessage: Error | string,
+    messageOrData?: string | Record<string, any>,
+    data?: Record<string, any>,
+  ): void {
+    const error = errorOrMessage instanceof Error ? errorOrMessage : null;
+    const message = (errorOrMessage instanceof Error ? messageOrData : errorOrMessage) as string;
+    const logData = (typeof messageOrData === 'object' ? messageOrData : (data ?? {})) as Record<
+      string,
+      any
+    >;
+
+    const plainError = error ? this.getPlainError(error) : null;
+
     this.pinoLogger.fatal(
-      { ...data, error: this.getPlainError(error) },
+      { ...logData, error: plainError },
       message ? this.prepareMessage(message) : '',
     );
   }

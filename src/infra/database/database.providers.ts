@@ -1,13 +1,13 @@
-import path from 'node:path';
-import pg from 'pg';
+import * as path from 'node:path';
+import * as pg from 'pg';
 import { Provider } from '@nestjs/common';
 import { IDatabase } from '@/infra/database/types/database.interface';
 import { CamelCasePlugin, Kysely, PostgresDialect } from 'kysely';
-import { ConfigService } from '@nestjs/config';
 import { IConfigService } from '@/infra/config/types/config-service.interface';
 import { IMigrator } from '@/infra/database/types/migrator.interface';
 import { MigrationsCore } from 'sql-migrations-core';
 import { SqlActions } from '@/infra/database/migrator/sql-actions';
+import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 
 export const DATABASE_DI_CONSTANTS = {
   DATABASE: Symbol('DATABASE'),
@@ -37,7 +37,7 @@ export const publicProviders: Provider[] = [
         ],
       });
     },
-    inject: [ConfigService],
+    inject: [CONFIG_DI_CONSTANTS.CONFIG_SERVICE],
   } satisfies Provider<IDatabase>,
   {
     provide: DATABASE_DI_CONSTANTS.MIGRATOR,

@@ -11,15 +11,7 @@ import { LoginCase } from '@/core/users/cases/login.case';
 import { ILoginCase } from '@/core/users/types/login-case.interface';
 import { RefreshTokensCase } from '@/core/users/cases/refresh-tokens.case';
 import { IRefreshTokensCase } from '@/core/users/types/refresh-tokens-case.interface';
-
-export const USERS_DI_CONSTANTS = {
-  USERS_REPOSITORY: Symbol('USERS_REPOSITORY'),
-  USERS_SERVICE: Symbol('USERS_SERVICE'),
-  USERS_TOKENS_SERVICE: Symbol('USERS_TOKENS_SERVICE'),
-  CREATE_USER_CASE: Symbol('CREATE_USER_CASE'),
-  LOGIN_CASE: Symbol('LOGIN_CASE'),
-  REFRESH_TOKENS_CASE: Symbol('REFRESH_TOKENS_CASE'),
-};
+import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 
 export const publicProviders: Provider[] = [
   {

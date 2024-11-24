@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
-import { UserSessionController } from '@/api/users/user-session.controller';
+import { SessionsController } from '@/api/users/sessions.controller';
 import { UsersController } from '@/api/users/users.controller';
+import { UsersModule } from '@/core/users/users.module';
 
 @Module({
-  controllers: [UsersController, UserSessionController],
+  imports: [UsersModule],
+  controllers: [UsersController, SessionsController],
 })
 export class ApiModule {}

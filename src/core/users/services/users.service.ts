@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ICryptographyService } from '@/core/cryptography/types/cryptography-service.interface';
-import { CRYPTOGRAPHY_DI_CONSTANTS } from '@/core/cryptography/cryptography.providers';
+import { CRYPTOGRAPHY_DI_CONSTANTS } from '@/core/cryptography/cryptography.di-constants';
 import { IUsersService } from '@/core/users/types/users-service.interface';
 
 @Injectable()

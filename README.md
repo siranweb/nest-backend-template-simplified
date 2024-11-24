@@ -6,6 +6,9 @@ TODO:
 - [x] Docker
 - [x] Core logic
 - [ ] Web API
+- [ ] Auth
+  - [ ] Guard
+  - [ ] Decorators
 - [x] Database
 - [ ] Migrations
   - [ ] CLI

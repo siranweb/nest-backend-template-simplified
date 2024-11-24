@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IJWTService } from '@/core/jwt/types/jwt-service.interface';
-import { JWT_DI_CONSTANTS } from '@/core/jwt/jwt.providers';
+import { JWT_DI_CONSTANTS } from '@/core/jwt/jwt.di-constants';
 import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 import { IConfigService } from '@/infra/config/types/config-service.interface';
 import { TConfiguration } from '@/infra/config/configuration/configuration.schema';
-import { USERS_DI_CONSTANTS } from '@/core/users/users.providers';
+import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { IUsersRepository } from '@/core/users/types/users-repository.interface';
 import { TTokenPair } from '@/core/users/types/shared';
 import { IUsersTokensService } from '@/core/users/types/users-tokens-service.interface';

@@ -1,10 +1,7 @@
-import { Provider } from '@nestjs/common';
 import { CryptographyService } from '@/core/cryptography/services/cryptography.service';
+import { Provider } from '@nestjs/common';
+import { CRYPTOGRAPHY_DI_CONSTANTS } from '@/core/cryptography/cryptography.di-constants';
 import { ICryptographyService } from '@/core/cryptography/types/cryptography-service.interface';
-
-export const CRYPTOGRAPHY_DI_CONSTANTS = {
-  CRYPTOGRAPHY_SERVICE: Symbol('CRYPTOGRAPHY_SERVICE'),
-};
 
 export const publicProviders: Provider[] = [
   {

@@ -1,4 +1,4 @@
-import { ExceptionFilter, Provider } from '@nestjs/common';
+import { ExceptionFilter, Provider, Scope } from '@nestjs/common';
 import { ErrorFilter } from '@/infra/common/filters/error.filter';
 import { Logger } from '@/lib/logger';
 import { ILogger } from '@/lib/logger/types/logger.interface';
@@ -22,6 +22,7 @@ export const publicProviders: Provider[] = [
       return new Logger({ nodeEnv });
     },
     inject: [CONFIG_DI_CONSTANTS.CONFIG_SERVICE],
+    scope: Scope.TRANSIENT,
   } satisfies Provider<ILogger>,
 ];
 
