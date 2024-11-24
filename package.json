@@ -8,7 +8,8 @@
   "scripts": {
     "start": "dotenvx run -f env/run/app.env -- nest start",
     "start:dev": "dotenvx run -f env/run/app.env -- nest start --watch",
-    "start:dist": "dotenvx run -f env/run/app.env -- node dist/main",
+    "start:dist": "node dist/main",
+    "start:dist:env": "dotenvx run -f env/run/app.env -- node dist/main",
     "build": "nest build",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "compose:dev:up": "docker compose -f docker-compose-dev.yml up -d",
