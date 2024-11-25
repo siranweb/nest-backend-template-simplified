@@ -10,7 +10,7 @@ import { ZodDtoValidationPipe } from '@/infra/common/pipes/zod-dto-validation.pi
 import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 import { ILogger } from '@/lib/logger/types/logger.interface';
 import { COMMON_DI_CONSTANTS } from '@/infra/common/common.providers';
-import fastifyCookie from '@fastify/cookie';
+import * as fastifyCookie from '@fastify/cookie';
 
 patchNestJsSwagger();
 
