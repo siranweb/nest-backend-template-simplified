@@ -6,7 +6,7 @@ TODO:
 - [x] Docker
 - [x] Core logic
 - [ ] Web API
-- [ ] Fastify logger
+- [x] Fastify logger
 - [ ] Auth
   - [ ] Guard
   - [ ] Decorators
