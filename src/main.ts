@@ -34,7 +34,7 @@ async function bootstrap() {
     .setTitle('Backend API')
     .setDescription('Backend public API')
     .setVersion('1.0')
-    .setOpenAPIVersion('3.0.0')
+    .setOpenAPIVersion('3.1.0')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, documentFactory);

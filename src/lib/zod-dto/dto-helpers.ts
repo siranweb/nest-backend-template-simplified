@@ -23,7 +23,7 @@ export function createZodDto<TOutput = any, TDef extends ZodTypeDef = ZodTypeDef
 
     public static _OPENAPI_METADATA_FACTORY(): Record<string, any> | undefined {
       const schema = createSchema(this.schema, {
-        openapi: '3.0.0',
+        openapi: '3.1.0',
       }).schema as SchemaObject;
       addSchemaProperties(schema);
       return schema.properties;

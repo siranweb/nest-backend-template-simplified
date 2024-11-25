@@ -28,14 +28,14 @@ export function patchNestJsSwagger() {
 
     if (isZodDto(type)) {
       schemas[type.name] = createSchema(type.schema, {
-        openapi: '3.0.0',
+        openapi: '3.1.0',
       }).schema as SchemaObject;
       return type.name;
     }
 
     if (isAppErrorDto(type)) {
       schemas[type.name] = createSchema(type.schema, {
-        openapi: '3.0.0',
+        openapi: '3.1.0',
       }).schema as SchemaObject;
       return type.name;
     }
