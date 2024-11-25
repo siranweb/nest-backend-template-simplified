@@ -14,21 +14,44 @@ import fastifyCookie from '@fastify/cookie';
 
 patchNestJsSwagger();
 
-// const fastifyInstance = fastify();
-// fastifyInstance.addHook('preValidation', (request, reply, done) => {
-//   console.log('payload: ', request.body);
-//   done();
-// });
-
 // TODO move out to bootstrap module
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
   await app.register(fastifyCookie);
-
+  const adapter = app.getHttpAdapter();
+  const instance = adapter.getInstance();
   const configService = await app.resolve<IConfigService>(CONFIG_DI_CONSTANTS.CONFIG_SERVICE);
-  const logger = await app.resolve<ILogger>(COMMON_DI_CONSTANTS.LOGGER);
+  const bootstrapLogger = await app.resolve<ILogger>(COMMON_DI_CONSTANTS.LOGGER);
+  const httpLogger = await app.resolve<ILogger>(COMMON_DI_CONSTANTS.LOGGER);
   const config = configService.get('webServer', { infer: true });
-  logger.setContext('Bootstrap');
+
+  bootstrapLogger.setContext('Bootstrap');
+  httpLogger.setContext('HTTP');
+
+  instance.addHook('preHandler', (request, _reply, done) => {
+    if (request.originalUrl.startsWith('/docs')) {
+      return done();
+    }
+    httpLogger.info('Incoming request.', {
+      method: request.method,
+      url: request.originalUrl,
+      body: request.body,
+    });
+    done();
+  });
+
+  instance.addHook('onSend', (request, reply, payload, done) => {
+    if (request.originalUrl.startsWith('/docs')) {
+      return done();
+    }
+    httpLogger.info('Response sent.', {
+      method: request.method,
+      url: request.originalUrl,
+      body: payload,
+      status: reply.statusCode,
+    });
+    done();
+  });
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Backend API')
@@ -45,9 +68,9 @@ async function bootstrap() {
 
   await app.listen(config.port, '0.0.0.0');
 
-  logger.info('Server started!');
-  logger.info(`OpenAPI documentation: http://localhost:${config.port}/docs`);
-  logger.info(`OpenAPI JSON: http://localhost:${config.port}/docs-json`);
-  logger.info(`OpenAPI YAML: http://localhost:${config.port}/docs-yaml`);
+  bootstrapLogger.info('Server started!');
+  bootstrapLogger.info(`OpenAPI documentation: http://localhost:${config.port}/docs`);
+  bootstrapLogger.info(`OpenAPI JSON: http://localhost:${config.port}/docs-json`);
+  bootstrapLogger.info(`OpenAPI YAML: http://localhost:${config.port}/docs-yaml`);
 }
 bootstrap();
