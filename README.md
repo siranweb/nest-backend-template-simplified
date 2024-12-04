@@ -7,9 +7,9 @@ TODO:
 - [x] Core logic
 - [ ] Web API
 - [x] Fastify logger
-- [ ] Auth
-  - [ ] Guard
-  - [ ] Decorators
+- [x] Auth
+  - [x] Guard
+  - [x] Decorators
 - [x] Database
 - [ ] Migrations
   - [ ] CLI
@@ -19,3 +19,4 @@ TODO:
   - [x] Errors with OpenAPI responses
 - [x] Linter
   - [x] Wait for typescript-eslint fix
+- [ ] Split CommonModule

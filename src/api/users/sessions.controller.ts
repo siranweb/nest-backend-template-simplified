@@ -12,13 +12,14 @@ import {
   Res,
 } from '@nestjs/common';
 import { UserCredentialsDto } from '@/api/users/dto/user-credentials.dto';
-import { ApiForbiddenResponse, ApiNoContentResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiNoContentResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ILoginCase } from '@/core/users/types/login-case.interface';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { IRefreshTokensCase } from '@/core/users/types/refresh-tokens-case.interface';
 import { UserLoginTakenError, UserNotFoundError } from '@/core/users/errors';
 import { ApiResponses } from '@/infra/common/decorators/api-responses.decorator';
 import { UnknownError, ValidationError } from '@/shared/errors/common-errors';
+import { ACCESS_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_NAME } from '@/shared/constants';
 
 @ApiTags('sessions')
 @Controller('/sessions')
@@ -60,13 +61,12 @@ export class SessionsController {
   @ApiOperation({ summary: 'Create new tokens by refresh token' })
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNoContentResponse()
-  @ApiForbiddenResponse()
   public async refresh(
     @Req() req: FastifyRequest,
     @Res({ passthrough: true })
     reply: FastifyReply,
   ) {
-    const oldRefreshToken = req.cookies['refreshToken'];
+    const oldRefreshToken = req.cookies[REFRESH_TOKEN_COOKIE_NAME];
 
     if (!oldRefreshToken) {
       throw new HttpException({}, HttpStatus.FORBIDDEN);
@@ -77,16 +77,16 @@ export class SessionsController {
   }
 
   private clearCookies(reply: FastifyReply): void {
-    reply.clearCookie('accessToken');
-    reply.clearCookie('refreshToken');
+    reply.clearCookie(ACCESS_TOKEN_COOKIE_NAME);
+    reply.clearCookie(REFRESH_TOKEN_COOKIE_NAME);
   }
 
   private setCookies(reply: FastifyReply, accessToken: string, refreshToken: string): void {
-    reply.setCookie('accessToken', accessToken, {
+    reply.setCookie(ACCESS_TOKEN_COOKIE_NAME, accessToken, {
       sameSite: 'strict',
       httpOnly: true,
     });
-    reply.setCookie('refreshToken', refreshToken, {
+    reply.setCookie(REFRESH_TOKEN_COOKIE_NAME, refreshToken, {
       sameSite: 'strict',
       httpOnly: true,
     });

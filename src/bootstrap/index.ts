@@ -11,7 +11,7 @@ import { ZodDtoValidationPipe } from '@/infra/common/pipes/zod-dto-validation.pi
 import { initInstance } from '@/bootstrap/instance/init-instance';
 import { setInstanceHooks } from '@/bootstrap/instance/set-instance-hooks';
 import { getSwaggerConfig } from '@/bootstrap/swagger/get-swagger-config';
-import { ExceptionFilter, NestInterceptor } from '@nestjs/common';
+import { CanActivate, ExceptionFilter, NestInterceptor } from '@nestjs/common';
 
 export async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -28,6 +28,7 @@ export async function bootstrap() {
   const requestIdHeaderInterceptor = await app.resolve<NestInterceptor>(
     COMMON_DI_CONSTANTS.REQUEST_ID_HEADER_INTERCEPTOR,
   );
+  const authGuard = await app.resolve<CanActivate>(COMMON_DI_CONSTANTS.AUTH_GUARD);
   const config = configService.get('webServer', { infer: true });
 
   bootstrapLogger.setContext('Bootstrap');
@@ -42,11 +43,12 @@ export async function bootstrap() {
   app.useGlobalFilters(errorFilter);
   app.useGlobalPipes(new ZodDtoValidationPipe());
   app.useGlobalInterceptors(requestIdHeaderInterceptor);
+  app.useGlobalGuards(authGuard);
 
   await app.listen(config.port, '0.0.0.0');
 
   bootstrapLogger.info('Server started!');
-  bootstrapLogger.info(`OpenAPI documentation: http://localhost:${config.port}/docs`);
-  bootstrapLogger.info(`OpenAPI JSON: http://localhost:${config.port}/docs-json`);
-  bootstrapLogger.info(`OpenAPI YAML: http://localhost:${config.port}/docs-yaml`);
+  bootstrapLogger.info(`OpenAPI Documentation: http://localhost:${config.port}/docs`);
+  bootstrapLogger.info(`JSON: http://localhost:${config.port}/docs-json`);
+  bootstrapLogger.info(`YAML: http://localhost:${config.port}/docs-yaml`);
 }

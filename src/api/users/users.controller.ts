@@ -1,7 +1,8 @@
-import { Controller, HttpStatus, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Controller, Get, HttpStatus, Post } from '@nestjs/common';
+import { ApiNoContentResponse, ApiTags } from '@nestjs/swagger';
 import { ApiResponses } from '@/infra/common/decorators/api-responses.decorator';
 import { UnknownError, ValidationError } from '@/shared/errors/common-errors';
+import { Auth } from '@/infra/common/decorators/auth.decorator';
 
 @ApiTags('users')
 @Controller('/users')
@@ -10,4 +11,9 @@ import { UnknownError, ValidationError } from '@/shared/errors/common-errors';
 export class UsersController {
   @Post()
   public async create() {}
+
+  @Get('test')
+  @Auth()
+  @ApiNoContentResponse()
+  public async authProtected() {}
 }
