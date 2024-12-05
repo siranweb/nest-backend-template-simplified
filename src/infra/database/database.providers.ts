@@ -6,8 +6,8 @@ import { CamelCasePlugin, Kysely, PostgresDialect } from 'kysely';
 import { IConfigService } from '@/infra/config/types/config-service.interface';
 import { IMigrator } from '@/infra/database/types/migrator.interface';
 import { MigrationsCore } from 'sql-migrations-core';
-import { SqlActions } from '@/infra/database/migrator/sql-actions';
 import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
+import { KyselyAdapter } from '@/infra/database/migrator/kysely-adapter';
 
 export const DATABASE_DI_CONSTANTS = {
   DATABASE: Symbol('DATABASE'),
@@ -43,8 +43,8 @@ export const publicProviders: Provider[] = [
     provide: DATABASE_DI_CONSTANTS.MIGRATOR,
     useFactory(db: IDatabase): IMigrator {
       return MigrationsCore.create({
-        path: path.resolve('migrations', 'db'),
-        sqlActions: new SqlActions(db),
+        migrationsDir: path.resolve('migrations', 'db'),
+        adapter: new KyselyAdapter(db),
       });
     },
     inject: [DATABASE_DI_CONSTANTS.DATABASE],

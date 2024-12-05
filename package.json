@@ -15,7 +15,14 @@
     "compose:dev:up": "docker compose -f docker-compose-dev.yml up -d",
     "compose:dev:down": "docker compose -f docker-compose-dev.yml down",
     "compose:up": "docker compose up -d --build",
-    "compose:down": "docker compose down"
+    "compose:down": "docker compose down",
+    "migrations:create": "dotenvx run -f env/run/app.env -- ts-node -r tsconfig-paths/register scripts/migrations/create.ts",
+    "migrations:sync": "dotenvx run -f env/run/app.env -- ts-node -r tsconfig-paths/register scripts/migrations/sync.ts",
+    "migrations:up": "dotenvx run -f env/run/app.env -- ts-node -r tsconfig-paths/register scripts/migrations/up.ts",
+    "migrations:down": "dotenvx run -f env/run/app.env -- ts-node -r tsconfig-paths/register scripts/migrations/down.ts"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.24.0",
@@ -34,7 +41,7 @@
     "pino-pretty": "^13.0.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
-    "sql-migrations-core": "^0.0.3",
+    "sql-migrations-core": "^0.1.0",
     "uuidv7": "^1.0.2",
     "zod": "^3.23.8",
     "zod-openapi": "^4.0.0"
