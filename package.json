@@ -22,7 +22,7 @@
     "migrations:down": "dotenvx run -f env/run/app.env -- ts-node -r tsconfig-paths/register scripts/migrations/down.ts"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.10"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "^1.24.0",

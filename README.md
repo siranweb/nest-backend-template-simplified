@@ -1,22 +1,7 @@
-# [WIP] Nest Backend Template
+# NestJS Backend Template
+This is template information page. If you are looking for startup page - check [START.md](START.md)
 
-TODO:
-- [x] Init project
-- [x] Project structure
-- [x] Docker
-- [x] Core logic
-- [x] Fastify logger
-- [x] Auth
-  - [x] Guard
-  - [x] Decorators
-- [x] Database
-- [x] Swagger
-- [x] Zod with OpenAPI
-- [x] Error handler
-  - [x] Errors with OpenAPI responses
-- [x] Linter
-  - [x] Wait for typescript-eslint fix
-- [x] Migrations
-  - [x] CLI
-- [x] Split CommonModule
-- [x] Web API
+## New project checklist
+* [ ] Update `package.json`, `package-lock.json` to change project name, etc.
+* [ ] Update `START.md`
+* [ ] Delete `README.md` and rename `START.md` to `README.md`
