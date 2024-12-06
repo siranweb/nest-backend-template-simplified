@@ -1,5 +1,5 @@
 import * as process from 'node:process';
-import { NodeEnv } from 'src/shared/types';
+import { ENodeEnv } from 'src/shared/types';
 import {
   configurationSchema,
   TConfiguration,
@@ -7,7 +7,7 @@ import {
 
 export function loadConfiguration(): TConfiguration {
   const config = {
-    nodeEnv: (process.env.NODE_ENV ?? NodeEnv.DEVELOPMENT) as NodeEnv,
+    nodeEnv: (process.env.NODE_ENV ?? ENodeEnv.DEVELOPMENT) as ENodeEnv,
     webServer: {
       port: Number(process.env.WEB_SERVER_PORT),
     },

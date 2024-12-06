@@ -1,11 +1,11 @@
 import { z } from 'zod';
-import { NodeEnv } from 'src/shared/types';
+import { ENodeEnv } from 'src/shared/types';
 
 const expirationTimeRegex =
   /^\d+\s*(sec|secs|second|seconds|s|minute|minutes|min|mins|m|hour|hours|hr|hrs|h|day|days|d|week|weeks|w|year|years|yr|yrs|y)$/i;
 
 export const configurationSchema = z.object({
-  nodeEnv: z.nativeEnum(NodeEnv),
+  nodeEnv: z.nativeEnum(ENodeEnv),
   webServer: z.object({
     port: z.number().positive(),
   }),
