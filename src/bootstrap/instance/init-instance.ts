@@ -1,6 +1,6 @@
 import fastify, { FastifyInstance, FastifyServerFactory } from 'fastify';
 import * as http from 'node:http';
-import { requestAsyncStorage } from '@/infra/common/providers/request-async-storage.provider';
+import { requestAsyncStorage } from '@/infra/api-common/providers/request-async-storage.provider';
 import { uuidv4 } from 'uuidv7';
 
 export function initInstance(): FastifyInstance {

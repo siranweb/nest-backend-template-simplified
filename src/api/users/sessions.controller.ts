@@ -17,7 +17,7 @@ import { ILoginCase } from '@/core/users/types/login-case.interface';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { IRefreshTokensCase } from '@/core/users/types/refresh-tokens-case.interface';
 import { UserLoginTakenError, UserNotFoundError } from '@/core/users/errors';
-import { ApiResponses } from '@/infra/common/decorators/api-responses.decorator';
+import { ApiResponses } from '@/infra/api-common/decorators/api-responses.decorator';
 import { UnknownError, ValidationError } from '@/shared/errors/common-errors';
 import { ACCESS_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_NAME } from '@/shared/constants';
 

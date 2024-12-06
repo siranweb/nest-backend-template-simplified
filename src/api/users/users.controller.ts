@@ -1,8 +1,8 @@
 import { Controller, Get, HttpStatus, Post } from '@nestjs/common';
 import { ApiNoContentResponse, ApiTags } from '@nestjs/swagger';
-import { ApiResponses } from '@/infra/common/decorators/api-responses.decorator';
+import { ApiResponses } from '@/infra/api-common/decorators/api-responses.decorator';
 import { UnknownError, ValidationError } from '@/shared/errors/common-errors';
-import { Auth } from '@/infra/common/decorators/auth.decorator';
+import { Auth } from '@/infra/api-common/decorators/auth.decorator';
 
 @ApiTags('users')
 @Controller('/users')

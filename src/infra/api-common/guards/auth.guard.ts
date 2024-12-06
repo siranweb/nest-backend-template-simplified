@@ -12,7 +12,7 @@ import { IConfigService } from '@/infra/config/types/config-service.interface';
 import { FastifyRequest } from 'fastify';
 import { ACCESS_TOKEN_COOKIE_NAME } from '@/shared/constants';
 import { Reflector } from '@nestjs/core';
-import { AuthMetadata } from '@/infra/common/decorators/auth.decorator';
+import { AuthMetadata } from '@/infra/api-common/decorators/auth.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

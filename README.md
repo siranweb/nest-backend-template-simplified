@@ -18,5 +18,5 @@ TODO:
   - [x] Wait for typescript-eslint fix
 - [x] Migrations
   - [x] CLI
+- [x] Split CommonModule
 - [ ] Web API
-- [ ] Split CommonModule

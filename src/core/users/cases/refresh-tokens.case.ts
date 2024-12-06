@@ -3,10 +3,10 @@ import { IRefreshTokensCase } from '@/core/users/types/refresh-tokens-case.inter
 import { IUsersRepository } from '@/core/users/types/users-repository.interface';
 import { TTokenPair } from '@/core/users/types/shared';
 import { Inject, Injectable } from '@nestjs/common';
-import { COMMON_DI_CONSTANTS } from '@/infra/common/common.di-constants';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { TokenInvalidError, UserNotFoundError } from '@/core/users/errors';
 import { IUsersTokensService } from '@/core/users/types/users-tokens-service.interface';
+import { COMMON_DI_CONSTANTS } from '@/infra/common/common.di-constants';
 
 @Injectable()
 export class RefreshTokensCase implements IRefreshTokensCase {

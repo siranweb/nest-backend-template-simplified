@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
-import { providers, publicProviders } from '@/infra/common/common.providers';
 import { ConfigModule } from '@/infra/config/config.module';
-import { JwtModule } from '@/core/jwt/jwt.module';
+import { providers, publicProviders } from '@/infra/common/common.providers';
 
-// TODO split to Common and ApiCommon
 @Module({
-  imports: [ConfigModule, JwtModule],
+  imports: [ConfigModule],
   providers,
   exports: publicProviders,
 })

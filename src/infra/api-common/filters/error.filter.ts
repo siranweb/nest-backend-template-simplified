@@ -4,8 +4,8 @@ import { AppError } from '@/shared/errors/app-error';
 import { ZodError } from 'zod';
 import { HttpError, UnknownError, ValidationError } from '@/shared/errors/common-errors';
 import { ILogger } from '@/lib/logger/types/logger.interface';
-import { COMMON_DI_CONSTANTS } from '@/infra/common/common.di-constants';
 import { normalizeError } from '@/shared/errors/normalize-error';
+import { COMMON_DI_CONSTANTS } from '@/infra/common/common.di-constants';
 
 @Catch()
 export class ErrorFilter implements ExceptionFilter {

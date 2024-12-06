@@ -5,13 +5,14 @@ import * as fastifyCookie from '@fastify/cookie';
 import { IConfigService } from '@/infra/config/types/config-service.interface';
 import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 import { ILogger } from '@/lib/logger/types/logger.interface';
-import { COMMON_DI_CONSTANTS } from '@/infra/common/common.di-constants';
+import { API_COMMON_DI_CONSTANTS } from '@/infra/api-common/api-common.di-constants';
 import { SwaggerModule } from '@nestjs/swagger';
-import { ZodDtoValidationPipe } from '@/infra/common/pipes/zod-dto-validation.pipe';
+import { ZodDtoValidationPipe } from '@/infra/api-common/pipes/zod-dto-validation.pipe';
 import { initInstance } from '@/bootstrap/instance/init-instance';
 import { setInstanceHooks } from '@/bootstrap/instance/set-instance-hooks';
 import { getSwaggerConfig } from '@/bootstrap/swagger/get-swagger-config';
 import { CanActivate, ExceptionFilter, NestInterceptor } from '@nestjs/common';
+import { COMMON_DI_CONSTANTS } from '@/infra/common/common.di-constants';
 
 export async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -24,11 +25,11 @@ export async function bootstrap() {
   const configService = await app.resolve<IConfigService>(CONFIG_DI_CONSTANTS.CONFIG_SERVICE);
   const bootstrapLogger = await app.resolve<ILogger>(COMMON_DI_CONSTANTS.LOGGER);
   const httpLogger = await app.resolve<ILogger>(COMMON_DI_CONSTANTS.LOGGER);
-  const errorFilter = await app.resolve<ExceptionFilter>(COMMON_DI_CONSTANTS.ERROR_FILTER);
+  const errorFilter = await app.resolve<ExceptionFilter>(API_COMMON_DI_CONSTANTS.ERROR_FILTER);
   const requestIdHeaderInterceptor = await app.resolve<NestInterceptor>(
-    COMMON_DI_CONSTANTS.REQUEST_ID_HEADER_INTERCEPTOR,
+    API_COMMON_DI_CONSTANTS.REQUEST_ID_HEADER_INTERCEPTOR,
   );
-  const authGuard = await app.resolve<CanActivate>(COMMON_DI_CONSTANTS.AUTH_GUARD);
+  const authGuard = await app.resolve<CanActivate>(API_COMMON_DI_CONSTANTS.AUTH_GUARD);
   const config = configService.get('webServer', { infer: true });
 
   bootstrapLogger.setContext('Bootstrap');
