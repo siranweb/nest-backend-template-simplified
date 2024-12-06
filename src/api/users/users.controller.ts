@@ -1,27 +1,47 @@
-import { Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiResponses } from '@/infra/api-common/decorators/api-responses.decorator';
 import { Auth } from '@/infra/api-common/decorators/auth.decorator';
 import { SharedResponses } from '@/infra/api-common/decorators/shared-responses.decorator';
 import { TokenPayload } from '@/infra/api-common/decorators/token-payload.decorator';
 import { TAccessTokenPayload } from '@/core/users/types/shared';
+import { ICreateUserCase } from '@/core/users/types/create-user-case.interface';
+import { IGetUserProfileCase } from '@/core/users/types/get-user-profile-case.interface';
+import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
+import { UserProfileResponse } from '@/api/users/responses';
+import { UserCredentialsDto } from '@/api/users/dto';
+import { UserLoginTakenError, UserNotFoundError } from '@/core/users/errors';
 
 @ApiTags('users')
 @Controller('/users')
 @SharedResponses()
 export class UsersController {
+  constructor(
+    @Inject(USERS_DI_CONSTANTS.CREATE_USER_CASE)
+    private readonly createUserCase: ICreateUserCase,
+    @Inject(USERS_DI_CONSTANTS.GET_USER_PROFILE_CASE)
+    private readonly getUserProfileCase: IGetUserProfileCase,
+  ) {}
+
   @Post()
   @ApiOperation({ summary: 'Create user and get tokens' })
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiResponses(HttpStatus.NO_CONTENT, { description: 'User created' })
-  public async create() {}
+  @ApiResponses(HttpStatus.BAD_REQUEST, [UserLoginTakenError])
+  public async create(@Body() dto: UserCredentialsDto): Promise<void> {
+    await this.createUserCase.execute(dto);
+  }
 
-  @Get('/users/me/profile')
-  @Auth()
+  @Get('/me/profile')
   @ApiOperation({ summary: 'Returns authorized user profile' })
+  @Auth()
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiResponses(HttpStatus.NO_CONTENT, { description: 'User profile TODO' })
-  public async authProtected(@TokenPayload() payload: TAccessTokenPayload) {
-    console.log(payload.userId);
+  @ApiResponses(HttpStatus.NO_CONTENT, { description: 'User profile' })
+  @ApiResponses(HttpStatus.BAD_REQUEST, [UserNotFoundError])
+  public async getAuthUserProfile(
+    @TokenPayload() payload: TAccessTokenPayload,
+  ): Promise<UserProfileResponse> {
+    const profile = await this.getUserProfileCase.execute(payload.userId);
+    return UserProfileResponse.create(profile);
   }
 }

@@ -12,6 +12,8 @@ import { ILoginCase } from '@/core/users/types/login-case.interface';
 import { RefreshTokensCase } from '@/core/users/cases/refresh-tokens.case';
 import { IRefreshTokensCase } from '@/core/users/types/refresh-tokens-case.interface';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
+import { GetUserProfileCase } from '@/core/users/cases/get-user-profile.case';
+import { IGetUserProfileCase } from '@/core/users/types/get-user-profile-case.interface';
 
 export const publicProviders: Provider[] = [
   {
@@ -30,6 +32,10 @@ export const publicProviders: Provider[] = [
     provide: USERS_DI_CONSTANTS.REFRESH_TOKENS_CASE,
     useClass: RefreshTokensCase,
   } satisfies Provider<IRefreshTokensCase>,
+  {
+    provide: USERS_DI_CONSTANTS.GET_USER_PROFILE_CASE,
+    useClass: GetUserProfileCase,
+  } satisfies Provider<IGetUserProfileCase>,
 ];
 
 export const providers: Provider[] = [

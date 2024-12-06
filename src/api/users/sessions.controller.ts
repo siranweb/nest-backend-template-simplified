@@ -11,7 +11,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { UserCredentialsDto } from '@/api/users/dto/user-credentials.dto';
+import { UserCredentialsDto } from '@/api/users/dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ILoginCase } from '@/core/users/types/login-case.interface';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
