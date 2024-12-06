@@ -38,7 +38,11 @@ export async function bootstrap() {
   setInstanceHooks(instance, httpLogger);
 
   const documentFactory = () => SwaggerModule.createDocument(app, getSwaggerConfig());
-  SwaggerModule.setup('docs', app, documentFactory);
+  SwaggerModule.setup('docs', app, documentFactory, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
 
   app.enableShutdownHooks();
   app.useGlobalFilters(errorFilter);

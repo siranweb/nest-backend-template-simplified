@@ -34,7 +34,7 @@ export class AuthGuard implements CanActivate {
     const jwtConfig = this.configService.get('jwt', { infer: true });
 
     const request = context.switchToHttp().getRequest<FastifyRequest>();
-    const token = request.cookies[ACCESS_TOKEN_COOKIE_NAME];
+    const token = this.getTokenFromHeader(request) ?? this.getTokenFromCookies(request);
     if (!token) {
       throw new UnauthorizedException();
     }
@@ -45,5 +45,18 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     return true;
+  }
+
+  private getTokenFromCookies(request: FastifyRequest): string | null {
+    return request.cookies[ACCESS_TOKEN_COOKIE_NAME] ?? null;
+  }
+
+  private getTokenFromHeader(request: FastifyRequest): string | null {
+    const header = request.headers.authorization;
+    if (!header || !header.startsWith('Bearer')) {
+      return null;
+    }
+
+    return header.split('Bearer ')[1] ?? null;
   }
 }
