@@ -6,7 +6,7 @@ import { IConfigService } from '@/infra/config/types/config-service.interface';
 import { TConfiguration } from '@/infra/config/configuration/configuration.schema';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { IUsersRepository } from '@/core/users/types/users-repository.interface';
-import { TTokenPair } from '@/core/users/types/shared';
+import { TAccessTokenPayload, TRefreshTokenPayload, TTokenPair } from '@/core/users/types/shared';
 import { IUsersTokensService } from '@/core/users/types/users-tokens-service.interface';
 
 @Injectable()
@@ -25,18 +25,17 @@ export class UsersTokensService implements IUsersTokensService {
   }
 
   public async createTokens(userId: string): Promise<TTokenPair> {
+    const accessTokenPayload: TAccessTokenPayload = { userId };
+    const refreshTokenPayload: TRefreshTokenPayload = { userId };
+
     const [accessToken, refreshToken] = await Promise.all([
       await this.jwtService.createToken({
-        payload: {
-          id: userId,
-        },
+        payload: accessTokenPayload,
         secret: this.jwtConfig.secret,
         expirationTime: this.jwtConfig.accessToken.expirationTime,
       }),
       await this.jwtService.createToken({
-        payload: {
-          id: userId,
-        },
+        payload: refreshTokenPayload,
         secret: this.jwtConfig.secret,
         expirationTime: this.jwtConfig.refreshToken.expirationTime,
       }),

@@ -16,8 +16,8 @@ export const AuthMetadata = Reflector.createDecorator<boolean>();
 export function Auth() {
   return applyDecorators(
     AuthMetadata(true),
-    ApiResponses(HttpStatus.FORBIDDEN, [HttpError]),
-    ApiResponses(HttpStatus.INTERNAL_SERVER_ERROR, [HttpError]),
+    ApiResponses(HttpStatus.FORBIDDEN, [HttpError], { description: 'Access denied' }),
+    ApiResponses(HttpStatus.UNAUTHORIZED, [HttpError], { description: 'Unauthorized' }),
     ApiBearerAuth(),
     ApiCookieAuth(ACCESS_TOKEN_COOKIE_NAME),
   );

@@ -10,9 +10,12 @@ import { JWT_DI_CONSTANTS } from '@/core/jwt/jwt.di-constants';
 import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 import { IConfigService } from '@/infra/config/types/config-service.interface';
 import { FastifyRequest } from 'fastify';
-import { ACCESS_TOKEN_COOKIE_NAME } from '@/shared/constants';
 import { Reflector } from '@nestjs/core';
 import { AuthMetadata } from '@/infra/api-common/decorators/auth.decorator';
+import {
+  getAccessTokenFromCookies,
+  getAccessTokenFromHeader,
+} from '@/infra/api-common/helpers/tokens';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -34,7 +37,7 @@ export class AuthGuard implements CanActivate {
     const jwtConfig = this.configService.get('jwt', { infer: true });
 
     const request = context.switchToHttp().getRequest<FastifyRequest>();
-    const token = this.getTokenFromHeader(request) ?? this.getTokenFromCookies(request);
+    const token = getAccessTokenFromHeader(request) ?? getAccessTokenFromCookies(request);
     if (!token) {
       throw new UnauthorizedException();
     }
@@ -45,18 +48,5 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     return true;
-  }
-
-  private getTokenFromCookies(request: FastifyRequest): string | null {
-    return request.cookies[ACCESS_TOKEN_COOKIE_NAME] ?? null;
-  }
-
-  private getTokenFromHeader(request: FastifyRequest): string | null {
-    const header = request.headers.authorization;
-    if (!header || !header.startsWith('Bearer')) {
-      return null;
-    }
-
-    return header.split('Bearer ')[1] ?? null;
   }
 }

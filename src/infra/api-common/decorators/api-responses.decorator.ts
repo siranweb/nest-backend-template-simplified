@@ -1,30 +1,38 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiExtraModels, ApiResponse, ApiResponseOptions, getSchemaPath } from '@nestjs/swagger';
+import { TDecoratorFunc } from '@/shared/types';
 
 const getResponseModelsKey = (status: number) => `${status}:models`;
 
 /**
  * Used to provide many variants of responses using 'oneOf'.
  * Available for both controller and handler.
- * @param statusCode
- * @param models Models to specify result
- * @param options
  */
+export function ApiResponses(statusCode: number, options?: ApiResponseOptions): TDecoratorFunc;
 export function ApiResponses(
   statusCode: number,
   models: Function[],
-  options: ApiResponseOptions = {},
-) {
-  return (target: any, propertyKey?: string, descriptor?: PropertyDescriptor) => {
+  options?: ApiResponseOptions,
+): TDecoratorFunc;
+export function ApiResponses(
+  statusCode: number,
+  modelsOrOptions?: Function[] | ApiResponseOptions,
+  optionsOrNothing?: ApiResponseOptions,
+): TDecoratorFunc {
+  return (target: any, propertyKey?: string | symbol, descriptor?: PropertyDescriptor) => {
+    const isModels = Array.isArray(modelsOrOptions);
+    const models = isModels ? modelsOrOptions : [];
+    const options = (isModels ? optionsOrNothing : modelsOrOptions) ?? {};
+
     // For method
     if (propertyKey) {
-      decorateApiResponses(statusCode, models, options, target, propertyKey, descriptor);
+      decorateApiResponses(statusCode, models ?? [], options, target, propertyKey, descriptor);
       Reflect.defineMetadata(getResponseModelsKey(statusCode), models, target[propertyKey]);
       return;
     }
 
     // For controller
-    decorateApiResponses(statusCode, models, options, target);
+    decorateApiResponses(statusCode, models ?? [], options, target);
     const propertyKeys = Object.getOwnPropertyNames(target.prototype);
     propertyKeys.forEach((propertyKey) => {
       const propertyModels: Function[] | undefined = Reflect.getMetadata(
@@ -35,7 +43,7 @@ export function ApiResponses(
       if (!propertyModels) {
         return;
       }
-      const allModels = [...propertyModels, ...models];
+      const allModels = [...propertyModels, ...(models ?? [])];
       decorateApiResponses(statusCode, allModels, options, target, propertyKey, descriptor);
     });
   };
@@ -46,14 +54,18 @@ function decorateApiResponses(
   models: Function[],
   options: ApiResponseOptions,
   target: any,
-  propertyKey?: string,
+  propertyKey?: string | symbol,
   descriptor?: PropertyDescriptor,
 ): void {
-  const schema = {
-    oneOf: models.map((model) => ({
-      $ref: getSchemaPath(model),
-    })),
-  };
+  let schema = undefined;
+
+  if (models.length > 0) {
+    schema = {
+      oneOf: models.map((model) => ({
+        $ref: getSchemaPath(model),
+      })),
+    };
+  }
 
   const decorator = applyDecorators(
     ApiExtraModels(...models),

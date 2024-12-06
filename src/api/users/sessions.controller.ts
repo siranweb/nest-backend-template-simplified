@@ -12,19 +12,18 @@ import {
   Res,
 } from '@nestjs/common';
 import { UserCredentialsDto } from '@/api/users/dto/user-credentials.dto';
-import { ApiNoContentResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ILoginCase } from '@/core/users/types/login-case.interface';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { IRefreshTokensCase } from '@/core/users/types/refresh-tokens-case.interface';
 import { UserLoginTakenError, UserNotFoundError } from '@/core/users/errors';
 import { ApiResponses } from '@/infra/api-common/decorators/api-responses.decorator';
-import { UnknownError, ValidationError } from '@/shared/errors/common-errors';
 import { ACCESS_TOKEN_COOKIE_NAME, REFRESH_TOKEN_COOKIE_NAME } from '@/shared/constants';
+import { SharedResponses } from '@/infra/api-common/decorators/shared-responses.decorator';
 
 @ApiTags('sessions')
 @Controller('/sessions')
-@ApiResponses(HttpStatus.BAD_REQUEST, [ValidationError])
-@ApiResponses(HttpStatus.INTERNAL_SERVER_ERROR, [UnknownError])
+@SharedResponses()
 export class SessionsController {
   constructor(
     @Inject(USERS_DI_CONSTANTS.LOGIN_CASE)
@@ -34,8 +33,9 @@ export class SessionsController {
   ) {}
 
   @Post('/auth')
-  @ApiOperation({ summary: 'Authorize and get cookies' })
+  @ApiOperation({ summary: 'Authorize and get tokens' })
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiResponses(HttpStatus.NO_CONTENT, { description: 'Tokens received' })
   @ApiResponses(HttpStatus.BAD_REQUEST, [UserLoginTakenError, UserNotFoundError])
   public async login(
     @Res({ passthrough: true })
@@ -47,9 +47,9 @@ export class SessionsController {
   }
 
   @Delete()
-  @ApiOperation({ summary: 'Remove cookies' })
+  @ApiOperation({ summary: 'Log out' })
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiNoContentResponse()
+  @ApiResponses(HttpStatus.NO_CONTENT, { description: 'Tokens deleted' })
   public async logout(
     @Res({ passthrough: true })
     reply: FastifyReply,
@@ -60,7 +60,7 @@ export class SessionsController {
   @Post('/tokens')
   @ApiOperation({ summary: 'Create new tokens by refresh token' })
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiNoContentResponse()
+  @ApiResponses(HttpStatus.NO_CONTENT, { description: 'Tokens refreshed' })
   public async refresh(
     @Req() req: FastifyRequest,
     @Res({ passthrough: true })

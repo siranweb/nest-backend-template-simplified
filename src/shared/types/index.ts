@@ -5,3 +5,9 @@ export enum NodeEnv {
 
 const emptySymbol = Symbol('TEmptyObject');
 export type TEmptyObject = { [emptySymbol]?: never };
+
+export type TDecoratorFunc = (
+  target: any,
+  propertyKey?: string | symbol,
+  descriptor?: PropertyDescriptor,
+) => void;
