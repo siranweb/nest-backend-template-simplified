@@ -35,8 +35,8 @@ export class UsersController {
   @Get('/me/profile')
   @ApiOperation({ summary: 'Returns authorized user profile' })
   @Auth()
-  @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiResponses(HttpStatus.NO_CONTENT, { description: 'User profile' })
+  @HttpCode(HttpStatus.OK)
+  @ApiResponses(HttpStatus.OK, [UserProfileResponse], { description: 'User profile' })
   @ApiResponses(HttpStatus.BAD_REQUEST, [UserNotFoundError])
   public async getAuthUserProfile(
     @TokenPayload() payload: TAccessTokenPayload,

@@ -9,12 +9,22 @@ import { TAccessTokenPayload } from '@/core/users/types/shared';
 /**
  * Used to get token payload without validation and other checks.
  * Should be used with @Auth decorator.
+ * If no token - returns null. Useful with "soft" auth mode.
  */
 export const TokenPayload = createParamDecorator(
-  (_data: never, ctx: ExecutionContext): TAccessTokenPayload => {
+  (_data: never, ctx: ExecutionContext): TAccessTokenPayload | null => {
     const request = ctx.switchToHttp().getRequest<FastifyRequest>();
-    const token = (getAccessTokenFromHeader(request) ?? getAccessTokenFromCookies(request))!;
+    const token = getAccessTokenFromHeader(request) ?? getAccessTokenFromCookies(request);
+
+    if (!token) {
+      return null;
+    }
+
     const payloadStr = token.split('.')[1];
-    return JSON.parse(atob(payloadStr));
+    try {
+      return JSON.parse(atob(payloadStr));
+    } catch {
+      return null;
+    }
   },
 );

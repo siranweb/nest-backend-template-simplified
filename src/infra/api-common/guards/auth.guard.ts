@@ -11,7 +11,7 @@ import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 import { IConfigService } from '@/infra/config/types/config-service.interface';
 import { FastifyRequest } from 'fastify';
 import { Reflector } from '@nestjs/core';
-import { AuthMetadata } from '@/infra/api-common/decorators/auth.decorator';
+import { AuthModeMetadata } from '@/infra/api-common/decorators/auth.decorator';
 import {
   getAccessTokenFromCookies,
   getAccessTokenFromHeader,
@@ -28,9 +28,9 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const shouldCheckAuth = this.reflector.get(AuthMetadata, context.getHandler());
+    const authMode = this.reflector.get(AuthModeMetadata, context.getHandler());
 
-    if (!shouldCheckAuth) {
+    if (!authMode) {
       return true;
     }
 
@@ -38,8 +38,14 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest<FastifyRequest>();
     const token = getAccessTokenFromHeader(request) ?? getAccessTokenFromCookies(request);
+
     if (!token) {
-      throw new UnauthorizedException();
+      if (authMode === 'normal') {
+        throw new UnauthorizedException();
+      } else {
+        // Ignore unauthorized if soft
+        return true;
+      }
     }
 
     try {
