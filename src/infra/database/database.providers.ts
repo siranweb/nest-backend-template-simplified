@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import SQLite from 'better-sqlite3';
+import * as SQLite from 'better-sqlite3';
 import { Provider } from '@nestjs/common';
 import { IDatabase } from '@/infra/database/types/database.interface';
 import { CamelCasePlugin, Kysely, SqliteDialect } from 'kysely';
