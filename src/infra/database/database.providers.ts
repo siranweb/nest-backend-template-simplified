@@ -8,11 +8,7 @@ import { IMigrator } from '@/infra/database/types/migrator.interface';
 import { MigrationsCore } from 'sql-migrations-core';
 import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 import { KyselyAdapter } from '@/infra/database/migrator/kysely-adapter';
-
-export const DATABASE_DI_CONSTANTS = {
-  DATABASE: Symbol('DATABASE'),
-  MIGRATOR: Symbol('MIGRATOR'),
-};
+import { DATABASE_DI_CONSTANTS } from '@/infra/database/database.di-constants';
 
 export const publicProviders: Provider[] = [
   {

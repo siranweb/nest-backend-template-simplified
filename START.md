@@ -27,6 +27,8 @@
    ```
 5. Start application itself
     ```shell
+    npm run start
+    # or
     npm run start:dev
     ```
 

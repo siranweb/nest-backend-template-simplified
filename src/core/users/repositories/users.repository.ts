@@ -1,7 +1,7 @@
 import { IUsersRepository } from '@/core/users/types/users-repository.interface';
 import { User } from '@/core/users/entities/user.entity';
 import { Inject, Injectable } from '@nestjs/common';
-import { DATABASE_DI_CONSTANTS } from '@/infra/database/database.providers';
+import { DATABASE_DI_CONSTANTS } from '@/infra/database/database.di-constants';
 import { IDatabase } from '@/infra/database/types/database.interface';
 
 @Injectable()
