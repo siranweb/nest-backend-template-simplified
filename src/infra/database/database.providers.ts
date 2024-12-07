@@ -1,34 +1,20 @@
 import * as path from 'node:path';
-import * as pg from 'pg';
+import SQLite from 'better-sqlite3';
 import { Provider } from '@nestjs/common';
 import { IDatabase } from '@/infra/database/types/database.interface';
-import { CamelCasePlugin, Kysely, PostgresDialect } from 'kysely';
-import { IConfigService } from '@/infra/config/types/config-service.interface';
+import { CamelCasePlugin, Kysely, SqliteDialect } from 'kysely';
 import { IMigrator } from '@/infra/database/types/migrator.interface';
 import { MigrationsCore } from 'sql-migrations-core';
-import { CONFIG_DI_CONSTANTS } from '@/infra/config/config.di-constants';
 import { KyselyAdapter } from '@/infra/database/migrator/kysely-adapter';
-
-export const DATABASE_DI_CONSTANTS = {
-  DATABASE: Symbol('DATABASE'),
-  MIGRATOR: Symbol('MIGRATOR'),
-};
+import { DATABASE_DI_CONSTANTS } from '@/infra/database/database.di-constants';
 
 export const publicProviders: Provider[] = [
   {
     provide: DATABASE_DI_CONSTANTS.DATABASE,
-    useFactory(configService: IConfigService): IDatabase {
-      const config = configService.get('database', { infer: true });
+    useFactory(): IDatabase {
       return new Kysely({
-        dialect: new PostgresDialect({
-          pool: new pg.Pool({
-            database: config.db,
-            user: config.user,
-            password: config.password,
-            host: config.host,
-            port: config.port,
-            max: 10,
-          }),
+        dialect: new SqliteDialect({
+          database: new SQLite(path.resolve('db/app.db')),
         }),
         plugins: [
           new CamelCasePlugin({
@@ -37,7 +23,6 @@ export const publicProviders: Provider[] = [
         ],
       });
     },
-    inject: [CONFIG_DI_CONSTANTS.CONFIG_SERVICE],
   } satisfies Provider<IDatabase>,
   {
     provide: DATABASE_DI_CONSTANTS.MIGRATOR,

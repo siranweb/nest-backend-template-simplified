@@ -18,13 +18,6 @@ export const configurationSchema = z.object({
       expirationTime: z.string().regex(expirationTimeRegex),
     }),
   }),
-  database: z.object({
-    user: z.string().min(1),
-    password: z.string().min(1),
-    db: z.string().min(1),
-    host: z.string().min(1),
-    port: z.number().positive(),
-  }),
 });
 
 export type TConfiguration = z.infer<typeof configurationSchema>;
