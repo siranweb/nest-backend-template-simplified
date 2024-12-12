@@ -1,7 +1,10 @@
-# NestJS Backend Template
-This is template information page. If you are looking for startup page - check [START.md](START.md)
+# Backend NestJS шаблон
+Это страница информации о шаблоне. Если вы ищете страницу инструкции для запуска - посмотрите [START.md](START.md).
 
-## New project checklist
-* [ ] Update `package.json`, `package-lock.json` to change project name, etc.
-* [ ] Update `START.md`
-* [ ] Delete `README.md` and rename `START.md` to `README.md`
+## Чек-лист нового проекта
+* [ ] Обновить файлы `package.json`, `package-lock.json` что изменить название, версию и т.д.
+* [ ] Обновить файл `START.md`, заполнив необходимые поля.
+* [ ] Удалить файл `README.md` и переименовать `START.md` в `README.md`.
+
+## Ограничения
+* `pnpm` плохо работает с типами каких-то зависимостей. Рекомендуется использовать `npm`.

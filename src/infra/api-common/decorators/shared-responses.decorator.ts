@@ -3,7 +3,7 @@ import { ApiResponses } from '@/infra/api-common/decorators/api-responses.decora
 import { UnknownError, ValidationError } from '@/shared/errors/common-errors';
 
 /**
- * Same api responses across all controllers.
+ * Общие ответы для всех контроллеров.
  */
 export function SharedResponses() {
   return applyDecorators(

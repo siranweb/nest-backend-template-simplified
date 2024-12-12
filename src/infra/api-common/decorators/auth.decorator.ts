@@ -7,13 +7,13 @@ import { ACCESS_TOKEN_COOKIE_NAME } from '@/shared/constants';
 import { TAuthMode } from '@/infra/api-common/types/auth-decorator.types';
 
 /**
- * Marks API that it's needs auth.
+ * Помечает API для авторизации.
  */
 export const AuthModeMetadata = Reflector.createDecorator<TAuthMode>();
 
 /**
- * Decorator for auth. Should be used for routes.
- * @param [mode] Mode of auth. Default - normal
+ * Декоратор для авторизации. Должен использоваться для хэндлеров.
+ * @param [mode] Режим авторизации. По-умолчанию - "normal"
  */
 export function Auth(mode: TAuthMode = 'normal') {
   const decorators = [

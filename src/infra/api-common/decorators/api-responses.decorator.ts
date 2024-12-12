@@ -5,8 +5,9 @@ import { TDecoratorFunc } from '@/shared/types';
 const getResponseModelsKey = (status: number) => `${status}:models`;
 
 /**
- * Used to provide many variants of responses using 'oneOf'.
- * Available for both controller and handler.
+ * Используется для передачи нескольких вариантов ответа API.
+ * Генерирует "oneOf" в схеме.
+ * Доступно для контроллеров и хэндлеров.
  */
 export function ApiResponses(statusCode: number, options?: ApiResponseOptions): TDecoratorFunc;
 export function ApiResponses(

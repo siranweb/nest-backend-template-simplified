@@ -6,7 +6,7 @@ export interface IJWTService {
 export interface CreateTokenParams {
   payload: Record<string, any>;
   secret: string;
-  /** 2h, 10m, etc. */
+  /** 2h, 10m, и т.д. */
   expirationTime: string;
 }
 

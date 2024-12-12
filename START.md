@@ -1,46 +1,46 @@
-# {project_name}
+# {название_проекта}
 
-{description}
+{описание}
 
-## Requirements
+## Требования
 * NodeJS >= v20.10.0
 * Npm
-* Docker with docker-compose
+* Docker и docker-compose
 
-## Run application
+## Запуск приложения
 
-### For development
-1. Install dependencies
+### Для разработки
+1. Установить зависимости
     ```shell
     npm install
     ```
-2. Provide environment variables to `env/run` (you can copy content from `env/example`):
+2. Положить env файлы в директорию `env/run` (можно скопировать содержимое с `env/example`):
     * `env/run/app.env`
     * `env/run/app-database.env`
-3. Start application services
+3. Запустить сервисы для приложения
     ```shell
     npm run compose:dev:up
     ```
-4. Run migrations
+4. Прогнать миграции
    ```shell
    npm run migrations:sync
    ```
-5. Start application itself
+5. Запустить само приложение
     ```shell
     npm run start
-    # or
+    # или
     npm run start:dev
     ```
 
-### For production
-1. Provide environment variables to `env/run` (if needed):
+### Для продакшена
+1. Положить env файлы в директорию `env/run` (если нужно):
     * `env/run/app.env`
     * `env/run/app-database.env`
-2. Start app with services
+2. Запустить приложение и его сервисы
     ```shell
     npm run compose:up
     ```
-3. Open shell in docker container and run migrations
+3. Открыть терминал в докер-контейнере и запустить миграции
    ```shell
    docker exec -it <container_id> bash
    cd app
