@@ -11,7 +11,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { UserCredentialsDto } from '@/api/users/dto';
+import { CreateUserDto } from '@/api/users/dto/create-user.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ILoginCase } from '@/core/users/types/login-case.interface';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
@@ -40,7 +40,7 @@ export class SessionsController {
   public async login(
     @Res({ passthrough: true })
     reply: FastifyReply,
-    @Body() dto: UserCredentialsDto,
+    @Body() dto: CreateUserDto,
   ): Promise<void> {
     const { accessToken, refreshToken } = await this.loginCase.execute(dto);
     this.setCookies(reply, accessToken, refreshToken);

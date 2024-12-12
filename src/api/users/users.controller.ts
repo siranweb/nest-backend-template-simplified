@@ -9,7 +9,7 @@ import { ICreateUserCase } from '@/core/users/types/create-user-case.interface';
 import { IGetUserProfileCase } from '@/core/users/types/get-user-profile-case.interface';
 import { USERS_DI_CONSTANTS } from '@/core/users/users.di-constants';
 import { UserProfileResponse } from '@/api/users/responses';
-import { UserCredentialsDto } from '@/api/users/dto';
+import { CreateUserDto } from '@/api/users/dto/create-user.dto';
 import { UserLoginTakenError, UserNotFoundError } from '@/core/users/errors';
 
 @ApiTags('users')
@@ -28,7 +28,7 @@ export class UsersController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiResponses(HttpStatus.NO_CONTENT, { description: 'User created' })
   @ApiResponses(HttpStatus.BAD_REQUEST, [UserLoginTakenError])
-  public async create(@Body() dto: UserCredentialsDto): Promise<void> {
+  public async create(@Body() dto: CreateUserDto): Promise<void> {
     await this.createUserCase.execute(dto);
   }
 

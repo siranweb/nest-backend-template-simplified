@@ -7,12 +7,22 @@ import { Provider, Scope } from '@nestjs/common';
 import { COMMON_DI_CONSTANTS } from '@/infra/common/common.di-constants';
 import { requestAsyncStorage } from '@/infra/api-common/providers/request-async-storage.provider';
 
+let logger: ILogger | undefined;
+
 export const publicProviders: Provider[] = [
   {
     provide: COMMON_DI_CONSTANTS.LOGGER,
     useFactory(configService: IConfigService, requestsAsyncStorage: IRequestAsyncStorage): ILogger {
       const nodeEnv = configService.get('nodeEnv', { infer: true });
-      return new Logger({ nodeEnv, asyncStorage: requestsAsyncStorage });
+      const parentLogger = new Logger({
+        nodeEnv,
+        asyncStorage: requestsAsyncStorage,
+        parent: logger,
+      });
+      if (!logger) {
+        logger = parentLogger;
+      }
+      return parentLogger;
     },
     inject: [CONFIG_DI_CONSTANTS.CONFIG_SERVICE, COMMON_DI_CONSTANTS.REQUEST_ASYNC_STORAGE],
     scope: Scope.TRANSIENT,

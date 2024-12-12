@@ -5,7 +5,7 @@ import { Injectable, Scope } from '@nestjs/common';
 @Injectable({ scope: Scope.TRANSIENT })
 export class Logger implements ILogger {
   private context: string;
-  private readonly pinoLogger: PinoLogger;
+  public readonly pinoLogger: PinoLogger;
 
   constructor(private readonly options: TLoggerOptions = {}) {
     const { context, nodeEnv, asyncStorage } = this.options;
@@ -35,7 +35,7 @@ export class Logger implements ILogger {
       };
     }
 
-    this.pinoLogger = pino(pinoConfig);
+    this.pinoLogger = this.options.parent?.pinoLogger ?? pino(pinoConfig);
     this.context = context ?? '';
   }
 
