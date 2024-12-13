@@ -7,9 +7,9 @@ import { FastifyRequest } from 'fastify';
 import { TAccessTokenPayload } from '@/core/users/types/shared';
 
 /**
- * Used to get token payload without validation and other checks.
- * Should be used with @Auth decorator.
- * If no token - returns null. Useful with "soft" auth mode.
+ * Используется для получения payload'а токена без валидации.
+ * Должен использоваться вместе с декоратором @Auth.
+ * Если токена нет - возвращает null. Полезно вместе с "soft" режимом.
  */
 export const TokenPayload = createParamDecorator(
   (_data: never, ctx: ExecutionContext): TAccessTokenPayload | null => {

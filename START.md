@@ -1,41 +1,27 @@
-# {project_name}
+# {название_проекта}
 
-{description}
+{описание}
 
-## Requirements
+## Требования
 * NodeJS >= v20.10.0
 * Npm
 
-## Run application
+## Запуск приложения
 
-### For development
-1. Install dependencies
+### Для разработки
+1. Установить зависимости
     ```shell
     npm install
     ```
-2. Provide environment variables to `env/run` (you can copy content from `env/example`):
+2. Положить env файлы в директорию `env/run` (можно скопировать содержимое с `env/example`):
     * `env/run/app.env`
-3. Run migrations
+3. Прогнать миграции
    ```shell
    npm run migrations:sync
    ```
-4. Start application itself
+4. Запустить само приложение
     ```shell
     npm run start
-    # or
+    # или
     npm run start:dev
     ```
-
-### For production
-1. Provide environment variables to `env/run` (if needed):
-    * `env/run/app.env`
-2. Start app with services
-    ```shell
-    npm run compose:up
-    ```
-3. Open shell in docker container and run migrations
-   ```shell
-   docker exec -it <container_id> bash
-   cd app
-   npm run migrations:sync
-   ```

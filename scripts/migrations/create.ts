@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { DatabaseModule } from '@/infra/database/database.module';
+import { DATABASE_DI_CONSTANTS } from '@/infra/database/database.di-constants';
 import { IMigrator } from '@/infra/database/types/migrator.interface';
 import { askQuestion } from '@/shared/utils/cli';
-import { DATABASE_DI_CONSTANTS } from '@/infra/database/database.di-constants';
 
 (async () => {
   const appContext = await NestFactory.createApplicationContext(DatabaseModule, { logger: false });

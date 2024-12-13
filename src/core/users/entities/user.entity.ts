@@ -22,6 +22,13 @@ export class User {
     };
   }
 
+  public toPlainProfile(): TUserProfile {
+    return {
+      id: this.id,
+      login: this.login,
+    };
+  }
+
   public isCorrectPasswordHash(hash: string): boolean {
     return hash === this.passwordHash;
   }
@@ -39,4 +46,9 @@ export type TUserPlain = {
   login: string;
   passwordHash: string;
   salt: string;
+};
+
+export type TUserProfile = {
+  id: string;
+  login: string;
 };

@@ -4,7 +4,7 @@ import { AppError } from '@/shared/errors/app-error';
 import { ZodError } from 'zod';
 import { HttpError, UnknownError, ValidationError } from '@/shared/errors/common-errors';
 import { ILogger } from '@/lib/logger/types/logger.interface';
-import { normalizeError } from '@/shared/errors/normalize-error';
+import { normalizeError } from '@/shared/utils/errors';
 import { COMMON_DI_CONSTANTS } from '@/infra/common/common.di-constants';
 
 @Catch()
@@ -29,6 +29,9 @@ export class ErrorFilter implements ExceptionFilter {
     if (error instanceof HttpException) {
       specificError = new HttpError();
       status = error.getStatus();
+    } else if (error instanceof UnknownError) {
+      specificError = error;
+      status = 500;
     } else if (error instanceof AppError) {
       specificError = error;
       status = 400;
