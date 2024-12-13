@@ -29,7 +29,7 @@ export function createZodDto<TOutput = any, TDef extends ZodTypeDef = ZodTypeDef
       return schema.properties;
     }
 
-    public static create(input: unknown) {
+    public static create(input: TInput) {
       return this.schema.parse(input);
     }
   }
